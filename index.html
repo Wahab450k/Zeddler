@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeddler's School | The Future of Adaptive Learning</title>
+    <meta name="description" content="Learn Smarter. Adapt Faster. Achieve More. Zeddler's School uses AI to personalize every lesson through rich multimedia content.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            /* Colors */
+            --bg-base: #05081c;
+            --bg-surface: #0A0F2C;
+            --accent-cyan: #00E5FF;
+            --accent-cyan-glow: rgba(0, 229, 255, 0.4);
+            --accent-violet: #7C3AED;
+            --accent-violet-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #F0F4FF;
+            --text-muted: #94A3B8;
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            
+            /* Typography */
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            
+            /* Layout & Transitions */
+            --container-width: 1280px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(124, 58, 237, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 229, 255, 0.05), transparent 25%);
+            background-attachment: fixed;
+        }
+
+        /* Subtle Grid Texture */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: linear-gradient(var(--glass-border) 1px, transparent 1px),
+            linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-head);
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul { list-style: none; }
+
+        img, svg { max-width: 100%; display: block; }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        section { padding: 100px 0; }
+
+        /* --- UTILITIES --- */
+        .text-cyan { color: var(--accent-cyan); }
+        .text-violet { color: var(--accent-violet); }
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+        
+        .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 4rem auto;
+            font-size: 1.1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-cyan);
+            color: var(--bg-base);
+            box-shadow: 0 0 20px var(--accent-cyan-glow);
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.05);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 2rem;
+            transition: var(--transition);
+        }
+
+        /* Scroll Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 1. NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 15px 0;
+            background: rgba(10, 15, 44, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--accent-cyan);
+            filter: drop-shadow(0 0 8px var(--accent-cyan-glow));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--text-main); }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0%; height: 2px;
+            background: var(--accent-cyan);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 5px;
+        }
+        .mobile-menu-btn svg { width: 28px; height: 28px; fill: currentColor; }
+
+        /* --- 2. HERO SECTION --- */
+        .hero {
+            padding-top: 150px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated Background Blobs */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: floatBlob 15s infinite alternate ease-in-out;
+        }
+        .blob-1 {
+            top: 10%; left: -10%;
+            width: 400px; height: 400px;
+            background: var(--accent-violet);
+        }
+        .blob-2 {
+            bottom: -10%; right: -5%;
+            width: 500px; height: 500px;
+            background: var(--accent-cyan);
+            animation-delay: -5s;
+        }
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.1); }
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 90%;
+        }
+
+        .typing-wrapper {
+            display: block;
+            min-height: 1.5em; /* Prevent layout shift */
+            color: var(--accent-cyan);
+            margin-top: 0.5rem;
+        }
+        .typed-text { border-right: 2px solid var(--accent-cyan); padding-right: 4px; animation: blinkCursor 0.75s step-end infinite; }
+        @keyframes blinkCursor { from, to { border-color: transparent } 50% { border-color: var(--accent-cyan); } }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* CSS-Only UI Mockup */
+        .mockup-container {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .mockup-window {
+            background: rgba(10, 15, 44, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 229, 255, 0.1);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            transform: rotateY(-10deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+            animation: floatUI 6s ease-in-out infinite;
+        }
+
+        @keyframes floatUI {
+            0%, 100% { transform: translateY(0) rotateY(-10deg) rotateX(5deg); }
+            50% { transform: translateY(-15px) rotateY(-8deg) rotateX(6deg); }
+        }
+
+        .mockup-header {
+            display: flex;
+            gap: 6px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .mockup-body {
+            display: flex;
+            height: 350px;
+        }
+        
+        .mockup-sidebar {
+            width: 80px;
+            border-right: 1px solid var(--glass-border);
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .mockup-icon {
+            width: 30px; height: 30px; border-radius: 6px;
+            background: var(--glass-border);
+        }
+        .mockup-icon.active { background: var(--accent-violet); }
+
+        .mockup-main {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mockup-video {
+            height: 140px;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #1e293b, #0f172a);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--glass-border);
+        }
+        .mockup-play {
+            width: 40px; height: 40px; border-radius: 50%; background: var(--accent-cyan);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px var(--accent-cyan-glow);
+        }
+        .mockup-play::after {
+            content: ''; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 12px solid var(--bg-base); margin-left: 4px;
+        }
+
+        .mockup-stats { display: flex; gap: 10px; }
+        .mockup-stat-box {
+            flex: 1; padding: 10px; background: var(--glass-bg); border-radius: 8px; border: 1px solid var(--glass-border);
+        }
+        .mockup-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+        .mockup-bar-fill { height: 100%; background: var(--accent-cyan); width: 75%; border-radius: 3px; }
+        .mockup-bar-fill.violet { background: var(--accent-violet); width: 45%; }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--text-muted);
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-10px) translateX(-50%); }
+            60% { transform: translateY(-5px) translateX(-50%); }
+        }
+
+        /* --- 3. STATS BAR --- */
+        .stats-section { padding: 40px 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); background: rgba(10, 15, 44, 0.5); backdrop-filter: blur(10px); }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-number { font-size: 2.5rem; font-family: var(--font-head); font-weight: 800; color: var(--accent-cyan); margin-bottom: 5px; }
+        .stat-label { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 4. FEATURES --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.1), transparent 50%);
+            z-index: -1; opacity: 0; transition: var(--transition);
+        }
+        .feature-card:hover { transform: translateY(-5px); border-color: rgba(0, 229, 255, 0.3); }
+        .feature-card:hover::before { opacity: 1; }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+        .feature-card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- 5. HOW IT WORKS --- */
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 4rem;
+        }
+        /* Connecting Line */
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 40px; left: 10%; right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+            z-index: 0;
+            border-top: 2px dashed var(--accent-violet);
+            opacity: 0.3;
+        }
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding: 0 1rem;
+        }
+        .step-num {
+            width: 80px; height: 80px;
+            background: var(--bg-surface);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-head); font-size: 2rem; font-weight: 700;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+            color: var(--text-main);
+        }
+        .step h3 { margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .step p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* --- 6. CATEGORIES --- */
+        .categories-wrapper {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 2rem 0;
+            overflow: hidden;
+        }
+        .categories-scroll {
+            display: flex;
+            gap: 1.5rem;
+            padding: 0 5vw;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE 10+ */
+            scroll-behavior: smooth;
+        }
+        .categories-scroll::-webkit-scrollbar { display: none; }
+        
+        .category-pill {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .category-pill:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.08);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 5px 15px rgba(0, 229, 255, 0.1);
+        }
+
+        /* --- 7. TESTIMONIALS --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .testimonial-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .stars { color: #FBBF24; margin-bottom: 1rem; font-size: 1.2rem; }
+        .quote { font-style: italic; color: var(--text-main); margin-bottom: 2rem; flex-grow: 1; }
+        .author { display: flex; align-items: center; gap: 1rem; }
+        .avatar {
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-family: var(--font-head);
+        }
+        .avatar-1 { background: linear-gradient(135deg, #FF6B6B, #FF8E53); }
+        .avatar-2 { background: linear-gradient(135deg, #48DBFB, #0ABDE3); }
+        .avatar-3 { background: linear-gradient(135deg, #1DD1A1, #10AC84); }
+        .author-info h4 { font-size: 1rem; margin-bottom: 2px; }
+        .author-info p { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* --- 8. PRICING --- */
+        .billing-toggle {
+            display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 0 auto 3rem auto;
+        }
+        .toggle-label { cursor: pointer; font-weight: 500; color: var(--text-muted); transition: color 0.3s; }
+        .toggle-label.active { color: var(--text-main); }
+        .switch {
+            position: relative; display: inline-block; width: 60px; height: 34px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 34px; transition: .4s;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 26px; width: 26px; left: 3px; bottom: 3px;
+            background-color: var(--accent-cyan); border-radius: 50%; transition: .4s;
+        }
+        input:checked + .slider:before { transform: translateX(26px); background-color: var(--accent-violet); }
+        .discount-badge { background: rgba(124, 58, 237, 0.2); color: #c4a1ff; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; align-items: center;
+        }
+        .pricing-card {
+            display: flex; flex-direction: column; height: 100%;
+        }
+        .pricing-card.featured {
+            background: rgba(10, 15, 44, 0.9);
+            border: 1px solid var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.1);
+            transform: scale(1.05);
+            position: relative;
+        }
+        .popular-badge {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--accent-cyan); color: var(--bg-base); padding: 4px 12px;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 700; font-family: var(--font-head);
+        }
+        .plan-name { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .plan-price { font-size: 3rem; font-family: var(--font-head); font-weight: 800; margin-bottom: 1rem; }
+        .plan-price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; font-family: var(--font-body); }
+        .plan-features { margin: 1.5rem 0 2rem 0; flex-grow: 1; }
+        .plan-features li { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.95rem; color: var(--text-muted); }
+        .plan-features li::before { content: '✓'; color: var(--accent-cyan); font-weight: bold; }
+        .pricing-card .btn { width: 100%; }
+
+        /* --- 9. FAQ --- */
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--glass-border); }
+        .faq-question {
+            width: 100%; text-align: left; padding: 1.5rem 0; background: none; border: none;
+            color: var(--text-main); font-family: var(--font-head); font-size: 1.2rem; font-weight: 600;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+        }
+        .faq-icon { transition: transform 0.3s ease; color: var(--accent-cyan); font-size: 1.5rem; line-height: 1;}
+        .faq-item.active .faq-icon { transform: rotate(45deg); color: var(--accent-violet); }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease; color: var(--text-muted);
+        }
+        .faq-answer-inner { padding-bottom: 1.5rem; }
+
+        /* --- 10. FINAL CTA --- */
+        .cta-section {
+            background: linear-gradient(to right, rgba(10, 15, 44, 0.9), rgba(124, 58, 237, 0.2), rgba(0, 229, 255, 0.1));
+            text-align: center; border-top: 1px solid var(--glass-border); position: relative; overflow: hidden;
+        }
+        .cta-section h2 { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.2rem; color: var(--text-main); opacity: 0.9; margin-bottom: 2rem; }
+        .cta-note { display: block; margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); }
+
+        /* --- 11. FOOTER --- */
+        footer {
+            border-top: 1px solid var(--glass-border); background: var(--bg-surface); padding-top: 4rem; position: relative;
+        }
+        footer::before { content:''; position: absolute; top:0; left:0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-violet), transparent); opacity: 0.5;}
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .footer-brand p { color: var(--text-muted); margin-top: 1rem; max-width: 300px; }
+        .footer-social { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .footer-social a {
+            width: 40px; height: 40px; border-radius: 50%; background: var(--glass-bg); border: 1px solid var(--glass-border);
+            display: flex; align-items: center; justify-content: center; transition: var(--transition);
+        }
+        .footer-social a:hover { background: var(--accent-cyan); color: var(--bg-base); border-color: var(--accent-cyan); transform: translateY(-3px); }
+        .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
+        
+        .footer-col h4 { font-size: 1.1rem; margin-bottom: 1.5rem; color: #fff; }
+        .footer-col ul { display: flex; flex-direction: column; gap: 0.8rem; }
+        .footer-col a { color: var(--text-muted); font-size: 0.95rem; }
+        .footer-col a:hover { color: var(--accent-cyan); padding-left: 5px; }
+
+        .footer-bottom {
+            padding: 2rem 0; text-align: center; border-top: 1px solid var(--glass-border); color: var(--text-muted); font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .hero-grid { gap: 2rem; }
+            .hero-content h1 { font-size: 3rem; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+            .pricing-card.featured { transform: scale(1); }
+            .testimonials-grid { grid-template-columns: 1fr; overflow-x: auto; display: flex; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 20px;}
+            .testimonials-grid::-webkit-scrollbar { display: none; }
+            .testimonial-card { flex: 0 0 100%; scroll-snap-align: start; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-actions .btn { display: none; }
+            .mobile-menu-btn { display: block; }
+            
+            /* Mobile Menu Active State */
+            .nav-links.active {
+                display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%;
+                background: rgba(10, 15, 44, 0.95); backdrop-filter: blur(20px); padding: 2rem 5%; border-bottom: 1px solid var(--glass-border);
+            }
+            .nav-actions.active { display: flex; position: absolute; top: calc(100% + 180px); left: 5%; right: 5%; }
+            .nav-actions.active .btn { width: 100%; display: flex; }
+
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-content p { margin: 0 auto 2rem auto; }
+            .hero-btns { justify-content: center; }
+            .typing-wrapper { display: inline-block; margin-top: 0; }
+            .mockup-container { max-width: 400px; margin: 0 auto; }
+            
+            .steps-container { flex-direction: column; gap: 3rem; }
+            .steps-container::before { display: none; } /* Hide line on mobile */
+            
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .footer-brand { grid-column: 1 / -1; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-btns { flex-direction: column; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVIGATION -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/>
+                </svg>
+                Zeddler's
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+            </ul>
+
+            <div class="nav-actions" id="navActions">
+                <a href="#pricing" class="btn btn-primary">Start Free Trial</a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        
+        <div class="container hero-grid">
+            <div class="hero-content fade-in-up">
+                <h1>
+                    The Future of Learning is <br>
+                    <span class="text-gradient">Adaptive</span>
+                </h1>
+                <p>
+                    Zeddler's School uses AI to personalize every lesson — combining video, audio, quizzes, and gamification into one seamless journey tailored for <span class="typing-wrapper"><span class="typed-text" id="typedText"></span></span>
+                </p>
+                <div class="hero-btns">
+                    <a href="#pricing" class="btn btn-primary">Get Started Free</a>
+                    <a href="#how-it-works" class="btn btn-outline">Watch Demo</a>
+                </div>
+            </div>
+
+            <div class="hero-visual fade-in-up" style="transition-delay: 0.2s;">
+                <div class="mockup-container">
+                    <div class="mockup-window">
+                        <div class="mockup-header">
+                            <div class="mockup-dot dot-red"></div>
+                            <div class="mockup-dot dot-yellow"></div>
+                            <div class="mockup-dot dot-green"></div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="mockup-sidebar">
+                                <div class="mockup-icon active"></div>
+                                <div class="mockup-icon"></div>
+                                <div class="mockup-icon"></div>
+                            </div>
+                            <div class="mockup-main">
+                                <div class="mockup-video">
+                                    <div class="mockup-play"></div>
+                                </div>
+                                <div class="mockup-stats">
+                                    <div class="mockup-stat-box">
+                                        <div style="font-size:0.7rem; color:var(--text-muted);">Math Progress</div>
+                                        <div class="mockup-bar-bg"><div class="mockup-bar-fill"></div></div>
+                                    </div>
+                                    <div class="mockup-stat-box">
+                                        <div style="font-size:0.7rem; color:var(--text-muted);">Science Mastery</div>
+                                        <div class="mockup-bar-bg"><div class="mockup-bar-fill violet"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 3. STATS BAR -->
+    <div class="stats-section">
+        <div class="container stats-grid fade-in-up">
+            <div class="stat-item">
+                <div class="stat-number" data-target="50000">0</div>
+                <div class="stat-label">Active Learners</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="1200">0</div>
+                <div class="stat-label">Courses</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="95" data-suffix="%">75</div>
+                <div class="stat-label">Completion Rate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="4.9" data-decimals="1" data-suffix="★">4.1</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. FEATURES SECTION -->
+    <section id="features" class="container">
+        <h2 class="section-title fade-in-up">Everything a Modern Learner Needs</h2>
+        <p class="section-sub fade-in-up">Say goodbye to one-size-fits-all education. Our platform adapts to your pace, style, and goals.</p>
+        
+        <div class="features-grid">
+            <div class="glass-card feature-card fade-in-up">
+                <div class="feature-icon">🧠</div>
+                <h3>AI-Adaptive Engine</h3>
+                <p>Personalizes difficulty and content based on your unique learning behavior and real-time comprehension.</p>
+            </div>
+            <div class="glass-card feature-card fade-in-up" style="transition-delay: 0.1s;">
+                <div class="feature-icon">🎥</div>
+                <h3>Multimedia Lessons</h3>
+                <p>Engage with high-quality video, audio clips, interactive slides, and 3D animations built into every module.</p>
+            </div>
+            <div class="glass-card feature-card fade-in-up" style="transition-delay: 0.2s;">
+                <div class="feature-icon">🎮</div>
+                <h3>Gamified Learning</h3>
+                <p>Stay motivated with achievements, unlockable badges, XP points, global leaderboards, and daily streaks.</p>
+            </div>
+            <div class="glass-card feature-card fade-in-up">
+                <div class="feature-icon">📊</div>
+                <h3>Real-Time Analytics</h3>
+                <p>Track your progress, identify weak areas instantly, and visualize your improvement trends over time.</p>
+            </div>
+            <div class="glass-card feature-card fade-in-up" style="transition-delay: 0.1s;">
+                <div class="feature-icon">📱</div>
+                <h3>Cross-Device Access</h3>
+                <p>Learn seamlessly on your phone, tablet, or desktop. Syncs automatically with full offline support.</p>
+            </div>
+            <div class="glass-card feature-card fade-in-up" style="transition-delay: 0.2s;">
+                <div class="feature-icon">👨‍🏫</div>
+                <h3>Live Tutor Sessions</h3>
+                <p>Stuck on a concept? Instantly book 1-on-1 micro-sessions with certified educators directly in the app.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. HOW IT WORKS -->
+    <section id="how-it-works" class="container">
+        <h2 class="section-title fade-in-up">Up and Running in Minutes</h2>
+        <p class="section-sub fade-in-up">A frictionless onboarding process designed to get you learning immediately.</p>
+        
+        <div class="steps-container fade-in-up">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Sign Up</h3>
+                <p>Create your free account in under 60 seconds. No credit card required to start exploring.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Take Assessment</h3>
+                <p>Our AI maps your learning style, current knowledge level, and identifies gaps through a quick quiz.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Start Learning</h3>
+                <p>Get a fully personalized curriculum delivered instantly. Hit play and start achieving more.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. COURSE CATEGORIES -->
+    <section class="container" style="padding: 50px 0;">
+        <h2 class="section-title fade-in-up" style="font-size: 2rem;">Explore What You Can Learn</h2>
+        
+        <div class="categories-wrapper fade-in-up">
+            <div class="categories-scroll">
+                <div class="category-pill">🧮 Mathematics</div>
+                <div class="category-pill">🔬 Science</div>
+                <div class="category-pill">📚 English Lit</div>
+                <div class="category-pill">💻 Coding & Tech</div>
+                <div class="category-pill">🏛️ History</div>
+                <div class="category-pill">🎨 Art & Design</div>
+                <div class="category-pill">📝 Test Prep (SAT/ACT)</div>
+                <div class="category-pill">🌱 Life Skills</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. TESTIMONIALS -->
+    <section id="testimonials" class="container">
+        <h2 class="section-title fade-in-up">Loved by Students, Parents & Teachers</h2>
+        <p class="section-sub fade-in-up">Don't just take our word for it. See the real results our community is achieving.</p>
+        
+        <div class="testimonials-grid">
+            <div class="glass-card testimonial-card fade-in-up">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"Zeddler's helped my daughter go from a C to an A in maths within 6 weeks. The adaptive quizzes are brilliant! It figures out exactly what she doesn't understand."</p>
+                <div class="author">
+                    <div class="avatar avatar-1">SM</div>
+                    <div class="author-info">
+                        <h4>Sarah M.</h4>
+                        <p>Parent</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card testimonial-card fade-in-up" style="transition-delay: 0.1s;">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"I love the gamified system. I actually look forward to studying now. The streaks keep me motivated, and the videos explain things way better than my textbook."</p>
+                <div class="author">
+                    <div class="avatar avatar-2">TA</div>
+                    <div class="author-info">
+                        <h4>Tariq A.</h4>
+                        <p>Student, Age 16</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card testimonial-card fade-in-up" style="transition-delay: 0.2s;">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"As a teacher, the analytics dashboard is gold. I can see exactly where each student struggles and intervene before they fall behind. It's a game-changer for my classroom."</p>
+                <div class="author">
+                    <div class="avatar avatar-3">JO</div>
+                    <div class="author-info">
+                        <h4>Mr. James O.</h4>
+                        <p>Educator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. PRICING -->
+    <section id="pricing" class="container">
+        <h2 class="section-title fade-in-up">Simple, Transparent Pricing</h2>
+        <p class="section-sub fade-in-up">Invest in your future. Choose the plan that fits your learning journey.</p>
+        
+        <div class="billing-toggle fade-in-up">
+            <span class="toggle-label active" id="labelMonthly">Monthly</span>
+            <label class="switch">
+                <input type="checkbox" id="pricingToggle">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label" id="labelAnnual">Annually <span class="discount-badge">Save 20%</span></span>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Free -->
+            <div class="glass-card pricing-card fade-in-up">
+                <h3 class="plan-name">Free</h3>
+                <div class="plan-price" data-monthly="$0" data-annual="$0">$0<span>/mo</span></div>
+                <p style="color:var(--text-muted); font-size:0.9rem;">Perfect for getting a taste.</p>
+                <ul class="plan-features">
+                    <li>Access to 5 foundation courses</li>
+                    <li>Basic progress tracking</li>
+                    <li>Community forum access</li>
+                    <li>Ad-supported experience</li>
+                </ul>
+                <a href="#" class="btn btn-outline">Get Started Free</a>
+            </div>
+
+            <!-- Pro (Featured) -->
+            <div class="glass-card pricing-card featured fade-in-up" style="transition-delay: 0.1s;">
+                <div class="popular-badge">MOST POPULAR</div>
+                <h3 class="plan-name text-cyan">Pro ⭐</h3>
+                <div class="plan-price" data-monthly="$14.99" data-annual="$11.99">$14.99<span>/mo</span></div>
+                <p style="color:var(--text-muted); font-size:0.9rem;">Everything you need to excel.</p>
+                <ul class="plan-features">
+                    <li>Unlimited access to all 1,200+ courses</li>
+                    <li>Full AI-Adaptive Learning Engine</li>
+                    <li>1 Live Tutor Session per month</li>
+                    <li>Advanced analytics dashboard</li>
+                    <li>Full offline mode download</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Start 7-Day Free Trial</a>
+            </div>
+
+            <!-- School -->
+            <div class="glass-card pricing-card fade-in-up" style="transition-delay: 0.2s;">
+                <h3 class="plan-name">School Plan</h3>
+                <div class="plan-price" style="font-size: 2.2rem;">Custom</div>
+                <p style="color:var(--text-muted); font-size:0.9rem;">For districts and institutions.</p>
+                <ul class="plan-features">
+                    <li>Bulk student & teacher licenses</li>
+                    <li>Admin & Educator Dashboard</li>
+                    <li>White-labeling options</li>
+                    <li>LMS Integration (Canvas, Google)</li>
+                    <li>Dedicated success manager</li>
+                </ul>
+                <a href="#" class="btn btn-outline">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FAQ -->
+    <section class="container">
+        <h2 class="section-title fade-in-up">Got Questions? We've Got Answers.</h2>
+        
+        <div class="faq-container fade-in-up">
+            <div class="faq-item">
+                <button class="faq-question">
+                    How does the AI personalization work?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Our AI monitors your interaction with the material—how long you spend on videos, your quiz accuracy, and the types of media you engage with most. It then dynamically adjusts the upcoming curriculum, delivering harder challenges if you excel, or alternative explanations (like switching from text to video) if you struggle.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is there a free trial available?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Yes! All new users receive a 7-day full-access free trial to our Pro plan. You can also opt for our permanent Free tier which provides limited access to foundational courses.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    What age groups is Zeddler's School designed for?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Our content spans from K-12 to early university level. The adaptive engine ensures that the tone, difficulty, and interface adjust to be age-appropriate based on the learner's profile.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can teachers track their students' progress?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Absolutely. With our School Plan, educators get a comprehensive dashboard to track individual and classroom metrics, identify common drop-off points, and assign specific modules.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is the platform available offline?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Yes, Pro users can download lessons, videos, and quizzes to our mobile and tablet apps for offline learning. Progress will sync automatically once reconnected to the internet.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How do I cancel my subscription?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        You can cancel anytime directly from your account settings with just two clicks. There are no hidden fees or lock-in contracts.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. FINAL CTA -->
+    <section class="cta-section">
+        <div class="container fade-in-up">
+            <h2>Ready to Transform the Way You Learn?</h2>
+            <p>Join 50,000+ learners already achieving more with Zeddler's School.</p>
+            <a href="#pricing" class="btn btn-primary" style="font-size: 1.2rem; padding: 18px 40px;">Start Your Free Trial Today →</a>
+            <span class="cta-note">No credit card required for basic signup. Cancel anytime.</span>
+        </div>
+    </section>
+
+    <!-- 11. FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/>
+                        </svg>
+                        Zeddler's School
+                    </a>
+                    <p>Learn Smarter. Adapt Faster. Achieve More.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter">
+                            <svg viewBox="0 0 24 24"><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84 0 0 0 .497-3.753C20.18 7.773 21.692 5.25 22 4.009z"></path></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#">Interactive Demo</a></li>
+                        <li><a href="#">Mobile App</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">System Status</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                &copy; 2025 Zeddler's School. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- --- JAVASCRIPT --- -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Sticky Navigation & Mobile Menu
+            const header = document.getElementById('header');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            const navActions = document.getElementById('navActions');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                navActions.classList.toggle('active');
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    navActions.classList.remove('active');
+                });
+            });
+
+            // 2. Typing Animation
+            const typedTextElement = document.getElementById('typedText');
+            const words = ["Smarter Learning", "Personalized Paths", "Real Results", "Every Student"];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typeSpeed = 100;
+
+            function typeEffect() {
+                const currentWord = words[wordIndex];
+                
+                if (isDeleting) {
+                    typedTextElement.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                    typeSpeed = 50;
+                } else {
+                    typedTextElement.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                    typeSpeed = 100;
+                }
+
+                if (!isDeleting && charIndex === currentWord.length) {
+                    isDeleting = true;
+                    typeSpeed = 1500; // Pause at end of word
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    typeSpeed = 500; // Pause before next word
+                }
+
+                setTimeout(typeEffect, typeSpeed);
+            }
+            setTimeout(typeEffect, 1000); // Initial delay
+
+            // 3. Scroll Animations (Intersection Observer)
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        
+                        // Trigger counters if they are inside this target
+                        if (entry.target.classList.contains('stats-grid')) {
+                            startCounters();
+                        }
+                        
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                observer.observe(el);
+            });
+
+            // 4. Counter Animation
+            let countersStarted = false;
+            function startCounters() {
+                if (countersStarted) return;
+                countersStarted = true;
+
+                const counters = document.querySelectorAll('.stat-number');
+                const speed = 200; // Lower is faster
+
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText.replace(/[^0-9.]/g, ''); // Extract number
+                        const decimals = counter.getAttribute('data-decimals') ? parseInt(counter.getAttribute('data-decimals')) : 0;
+                        const suffix = counter.getAttribute('data-suffix') || '';
+                        
+                        // Calculate increment
+                        const inc = target / speed;
+
+                        if (count < target) {
+                            let newCount = count + inc;
+                            if (newCount > target) newCount = target;
+                            
+                            // Format
+                            let displayVal = newCount.toFixed(decimals);
+                            if(target > 1000) {
+                                // Add commas for thousands
+                                displayVal = parseInt(displayVal).toLocaleString();
+                            }
+                            
+                            counter.innerText = displayVal + suffix;
+                            setTimeout(updateCount, 15);
+                        } else {
+                            let finalVal = target.toFixed(decimals);
+                            if(target > 1000) finalVal = parseInt(target).toLocaleString();
+                            // Add plus for thousands
+                            counter.innerText = finalVal + (target > 1000 ? '+' : '') + suffix;
+                        }
+                    };
+                    updateCount();
+                });
+            }
+
+            // 5. Pricing Toggle
+            const pricingToggle = document.getElementById('pricingToggle');
+            const labelMonthly = document.getElementById('labelMonthly');
+            const labelAnnual = document.getElementById('labelAnnual');
+            const prices = document.querySelectorAll('.plan-price');
+
+            pricingToggle.addEventListener('change', (e) => {
+                const isAnnual = e.target.checked;
+                
+                labelMonthly.classList.toggle('active', !isAnnual);
+                labelAnnual.classList.toggle('active', isAnnual);
+
+                prices.forEach(priceEl => {
+                    if (priceEl.innerText === 'Custom') return;
+                    
+                    const monthly = priceEl.getAttribute('data-monthly');
+                    const annual = priceEl.getAttribute('data-annual');
+                    
+                    // Add fade effect for transition
+                    priceEl.style.opacity = '0';
+                    setTimeout(() => {
+                        priceEl.innerHTML = (isAnnual ? annual : monthly) + '<span>/mo</span>';
+                        priceEl.style.opacity = '1';
+                    }, 200);
+                });
+            });
+
+            // Add CSS transition to prices for smooth toggle
+            prices.forEach(p => p.style.transition = 'opacity 0.2s ease');
+
+            // 6. FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const btn = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+
+                btn.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all
+                    faqItems.forEach(faq => {
+                        faq.classList.remove('active');
+                        faq.querySelector('.faq-answer').style.maxHeight = null;
+                    });
+
+                    // Open clicked if it wasn't active
+                    if (!isActive) {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                    }
+                });
+            });
+            
+            // Open first FAQ by default
+            if(faqItems.length > 0) {
+                faqItems[0].classList.add('active');
+                const firstAnswer = faqItems[0].querySelector('.faq-answer');
+                firstAnswer.style.maxHeight = firstAnswer.scrollHeight + "px";
+            }
+        });
+    </script>
+</body>
+</html>
